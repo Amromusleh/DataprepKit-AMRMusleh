@@ -85,7 +85,7 @@ file = file_input
 
 def starting():
     while True:
-        choices = print("Write 1 to see the full data\nWrite 2 to see the removed Missing Values\nWrite 3 to see the imputed Missing Values\nWrite 4 to see the Basic Statistics for the data\nWrite 5 to perform One-Hot Encoding for categorical columns\nWrite 'QUIT' to stop")
+        choices = print("Write 1 to see the full data\nWrite 2 to see the removed Missing Values\nWrite 3 to see the Basic Statistics for the data\nWrite 4 to perform One-Hot Encoding for categorical columns\nWrite 'QUIT' to stop")
         choice = input("Choose a number: ").lower()
 
         if choice == "1":
@@ -98,17 +98,13 @@ def starting():
             starting()
             break
 
-        elif choice == "3":
-            imputed_missing_values()
-            starting()
-            break
 
-        elif choice == "4":
+        elif choice == "3":
             Basic_Statistics()
             starting()
             break
 
-        elif choice == "5":
+        elif choice == "4":
             file_input = one_hot_encode_categorical_columns(file)
             print("One-Hot Encoding applied to categorical columns.")
             print(file_input)
