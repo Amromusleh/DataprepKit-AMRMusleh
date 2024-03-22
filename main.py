@@ -44,29 +44,7 @@ def removed_missing_values():
         else:
             print("Invalid axis. No changes made.")
 
-def imputed_missing_values():
-    global file_input
-    while True:
-        print("warning u need full numric file to use mean and median using non numric full will case an error")
-        imputation_kind = input("Choose the imputation kind (mean/median/mode): ").lower()
 
-        if imputation_kind == "mean":
-            file_input = file_input.fillna(file_input.mean())
-            print(file_input)
-            print("Missing values imputed using mean.")
-            break
-        elif imputation_kind == 'median':
-            file_input = file_input.fillna(file_input.median())
-            print(file_input)
-            print("Missing values imputed using median.")
-            break
-        elif imputation_kind == 'mode':
-            file_input = file_input.fillna(file_input.mode().iloc[0])
-            print(file_input)
-            print("Missing values imputed using mode.")
-            break
-        else:
-            print("Invalid imputation strategy. Please choose a valid strategy.")
 
 def one_hot_encode_column(data, column_name):
     unique_values = data[column_name].unique()
