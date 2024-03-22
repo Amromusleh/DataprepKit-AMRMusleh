@@ -44,15 +44,48 @@ def removed_missing_values():
         else:
             print("Invalid axis. No changes made.")
 
+def imputed_missing_values():
+    global file_input
+    while True:
+        print("warning u need full numric file to use mean and median using non numric full will case an error")
+        imputation_kind = input("Choose the imputation kind (mean/median/mode): ").lower()
 
+        if imputation_kind == "mean":
+            file_input = file_input.fillna(file_input.mean())
+            print(file_input)
+            print("Missing values imputed using mean.")
+            break
+        elif imputation_kind == 'median':
+            file_input = file_input.fillna(file_input.median())
+            print(file_input)
+            print("Missing values imputed using median.")
+            break
+        elif imputation_kind == 'mode':
+            file_input = file_input.fillna(file_input.mode().iloc[0])
+            print(file_input)
+            print("Missing values imputed using mode.")
+            break
+        else:
+            print("Invalid imputation strategy. Please choose a valid strategy.")
 
+def one_hot_encode_column(data, column_name):
+    unique_values = data[column_name].unique()
+    for value in unique_values:
+        new_column_name = f"{column_name}_{value}"
+        data[new_column_name] = (data[column_name] == value).astype(int)
+    data = data.drop(column_name, axis=1)
+    return data
 
-
+def one_hot_encode_categorical_columns(data):
+    categorical_columns = data.select_dtypes(include=['object']).columns
+    for column in categorical_columns:
+        data = one_hot_encode_column(data, column)
+    return data
 file = file_input
 
 def starting():
     while True:
-        choices = print("Write 1 to see the full data\nWrite 2 to see the removed Missing Values\nWrite 3 to see the Basic Statistics for the data\nWrite 'QUIT' to stop")
+        choices = print("Write 1 to see the full data\nWrite 2 to see the removed Missing Values\nWrite 3 to see the imputed Missing Values\nWrite 4 to see the Basic Statistics for the data\nWrite 5 to perform One-Hot Encoding for categorical columns\nWrite 'QUIT' to stop")
         choice = input("Choose a number: ").lower()
 
         if choice == "1":
@@ -65,12 +98,22 @@ def starting():
             starting()
             break
 
-
         elif choice == "3":
+            imputed_missing_values()
+            starting()
+            break
+
+        elif choice == "4":
             Basic_Statistics()
             starting()
             break
 
+        elif choice == "5":
+            file_input = one_hot_encode_categorical_columns(file)
+            print("One-Hot Encoding applied to categorical columns.")
+            print(file_input)
+            starting()
+            break
 
         elif choice == "quit":
             break
